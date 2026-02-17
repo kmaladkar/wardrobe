@@ -1,0 +1,31 @@
+# uv / Python
+.venv/
+uv.lock
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local development data (DB, uploads) – do not commit
+data/
+
+# Trained model artifacts (optional)
+models/
+*.pt
+*.pth
