@@ -24,3 +24,7 @@ Thumbs.db
 
 # Local development data (DB, uploads) – do not commit
 local/
+
+# Override global **/data: always track the Python package src/wardrobe/data/
+!src/wardrobe/data/
+!src/wardrobe/data/**
