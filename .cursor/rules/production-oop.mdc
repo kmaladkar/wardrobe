@@ -1,0 +1,45 @@
+---
+description: Production-level code using OOP and design patterns
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Production code: OOP and design patterns
+
+Prefer **object-oriented design** and **design patterns** over standalone functions.
+
+## Guidelines
+
+- **Encapsulate state and behavior in classes.** Use classes for config, DB access, repositories, and services; avoid module-level globals and loose functions for core logic.
+- **Use design patterns where they fit:** Repository (data access), Factory (connections, clients), Strategy (swappable behavior), Dependency Injection (pass dependencies into constructors), Context Manager (`with`) for resources (DB connections, files).
+- **Depend on abstractions.** Define abstract base classes (ABC) or protocols for repositories and services; depend on these in callers so implementations can be swapped (e.g. SQLite vs Postgres, local vs S3).
+- **Single responsibility.** One clear purpose per class; compose small classes rather than large god objects.
+- **Immutability where possible.** Use frozen dataclasses or read-only properties for config and DTOs.
+
+## Examples
+
+```python
+# ❌ BAD: module-level functions and globals
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./db.db")
+def get_connection():
+    return sqlite3.connect(DATABASE_URL)
+
+# ✅ GOOD: class with clear responsibility and injectable config
+class ConnectionFactory:
+    def __init__(self, config: DatabaseConfig):
+        self._config = config
+    def create(self) -> sqlite3.Connection:
+        ...
+```
+
+```python
+# ✅ GOOD: Repository pattern (abstract + concrete)
+class ItemRepository(Protocol):
+    def get_by_id(self, id: str) -> Item | None: ...
+    def list_by_user(self, user_id: str) -> list[Item]: ...
+
+class SqliteItemRepository:
+    def __init__(self, connection_factory: ConnectionFactory): ...
+```
+
+Apply this to new and refactored code so the codebase stays production-ready and testable.
