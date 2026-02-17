@@ -26,49 +26,14 @@ def get_connection(db_path: Path | None = None) -> sqlite3.Connection:
 
 
 SCHEMA = """
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS images (
     id TEXT PRIMARY KEY,
-    email TEXT UNIQUE,
-    display_name TEXT,
-    preferences TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    data BLOB NOT NULL,
+    filename TEXT NOT NULL,
+    content_type TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
-
-CREATE TABLE IF NOT EXISTS items (
-    id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    image_url TEXT NOT NULL,
-    category TEXT NOT NULL,
-    subcategory TEXT,
-    colors TEXT,
-    pattern TEXT,
-    formality TEXT,
-    season TEXT,
-    brand TEXT,
-    purchase_date TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE INDEX IF NOT EXISTS idx_items_user_id ON items(user_id);
-CREATE INDEX IF NOT EXISTS idx_items_category ON items(category);
-
-CREATE TABLE IF NOT EXISTS outfits (
-    id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    occasion TEXT,
-    date_worn TEXT,
-    rating INTEGER,
-    weather TEXT,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE TABLE IF NOT EXISTS outfit_items (
-    outfit_id TEXT NOT NULL REFERENCES outfits(id) ON DELETE CASCADE,
-    item_id TEXT NOT NULL REFERENCES items(id) ON DELETE CASCADE,
-    PRIMARY KEY (outfit_id, item_id)
-);
-CREATE INDEX IF NOT EXISTS idx_outfits_user_id ON outfits(user_id);
+CREATE INDEX IF NOT EXISTS idx_images_created_at ON images(created_at);
 """
 
 

@@ -22,7 +22,7 @@ def main() -> None:
     print(f"Initializing SQLite database at {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     init_db()
-    print("Done. Tables: users, items, outfits, outfit_items.")
+    print("Done. Table: images.")
 
 
 if __name__ == "__main__":

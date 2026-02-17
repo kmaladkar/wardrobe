@@ -14,20 +14,20 @@ def _path(value: str | None, default: Path) -> Path:
     return p
 
 
-# ----- Database (local dev: SQLite in project data dir) -----
+# ----- Database (local dev: SQLite in local/ folder) -----
 # For production set DATABASE_URL to Postgres, e.g. postgresql://user:pass@host/db
 DATABASE_URL: str = _str(
     os.environ.get("DATABASE_URL"),
-    "sqlite:///./data/wardrobe.db",
+    "sqlite:///./local/wardrobe.db",
 )
 
 # ----- Storage (local dev: filesystem in project data dir) -----
 # Options: "local" | "s3" (future). Local writes to STORAGE_LOCAL_PATH.
 STORAGE_TYPE: str = _str(os.environ.get("STORAGE_TYPE"), "local")
-# Default: ./data/uploads when running from project root
+# Default: ./local/uploads when running from project root
 STORAGE_LOCAL_PATH: Path = _path(
     os.environ.get("STORAGE_LOCAL_PATH"),
-    Path.cwd() / "data" / "uploads",
+    Path.cwd() / "local" / "uploads",
 )
 # For S3 (when STORAGE_TYPE=s3): bucket, region, keys via env
 # S3_BUCKET, AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
