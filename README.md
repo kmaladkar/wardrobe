@@ -2,6 +2,9 @@
 
 Generative AI mobile app that recommends outfits based on your collection.
 
+- **Backend:** Python (this repo, `uv run main.py`)
+- **iPhone app:** SwiftUI app in [ios/](ios/) – see [ios/README.md](ios/README.md) to run it.
+
 ## Setup
 
 This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
