@@ -24,8 +24,3 @@ Thumbs.db
 
 # Local development data (DB, uploads) – do not commit
 local/
-
-# Trained model artifacts (optional)
-models/
-*.pt
-*.pth
