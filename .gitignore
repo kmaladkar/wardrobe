@@ -227,3 +227,9 @@ models/
 *.onnx
 *.safetensors
 
+# iOS / Xcode
+ios/**/xcuserdata/
+ios/**/DerivedData/
+ios/**/build/
+ios/**/*.xcuserstate
+

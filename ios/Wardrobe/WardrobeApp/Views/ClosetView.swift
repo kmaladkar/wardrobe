@@ -22,28 +22,33 @@ struct ClosetView: View {
                         description: Text("Add clothes with the Add tab to build your closet.")
                     )
                 } else {
-                    List(items) { item in
-                        HStack {
-                            placeholderImage
-                            VStack(alignment: .leading) {
-                                Text(item.category).font(.headline)
-                                if let sub = item.subcategory, !sub.isEmpty { Text(sub).font(.caption) }
+                    ScrollView {
+                        LazyVStack(spacing: 0) {
+                            ForEach(items) { item in
+                                HStack(spacing: 12) {
+                                    ItemThumbnail(imageUrl: item.imageUrl)
+                                    VStack(alignment: .leading) {
+                                        Text(item.category).font(.headline)
+                                        if let sub = item.subcategory, !sub.isEmpty { Text(sub).font(.caption) }
+                                    }
+                                    Spacer(minLength: 0)
+                                }
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
+                                .background(Color(.secondarySystemGroupedBackground))
+                                .padding(.horizontal)
+                                .padding(.vertical, 4)
                             }
                         }
+                        .padding(.vertical, 8)
                     }
+                    .scrollIndicators(.visible)
+                    .refreshable { await loadItems() }
                 }
             }
             .navigationTitle("Closet")
-            .refreshable { await loadItems() }
             .task { await loadItems() }
         }
-    }
-
-    private var placeholderImage: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(.gray.opacity(0.2))
-            .frame(width: 56, height: 56)
-            .overlay(Image(systemName: "tshirt").foregroundStyle(.gray))
     }
 
     private func loadItems() async {
@@ -55,6 +60,38 @@ struct ClosetView: View {
         } catch {
             errorMessage = "Could not load items. Is the backend running?"
         }
+    }
+}
+
+// MARK: - Thumbnail
+
+private struct ItemThumbnail: View {
+    let imageUrl: String
+    private let size: CGFloat = 56
+
+    var body: some View {
+        AsyncImage(url: URL(string: imageUrl)) { phase in
+            switch phase {
+            case .empty:
+                placeholder
+            case .success(let image):
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            case .failure:
+                placeholder
+            @unknown default:
+                placeholder
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var placeholder: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(.gray.opacity(0.2))
+            .overlay(Image(systemName: "tshirt").foregroundStyle(.gray))
     }
 }
 
