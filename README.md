@@ -2,8 +2,9 @@
 
 Generative AI mobile app that recommends outfits based on your collection.
 
-- **Backend:** Python (this repo, `uv run main.py`)
+- **Backend:** Python (this repo, `uv run wardrobe`)
 - **iPhone app:** SwiftUI app in [ios/](ios/) – see [ios/README.md](ios/README.md) to run it.
+- **Connect backend ↔ iOS:** [docs/BACKEND_IOS_CONNECTION.md](docs/BACKEND_IOS_CONNECTION.md)
 
 ## Setup
 
@@ -16,8 +17,8 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Create virtual environment and install dependencies
 uv sync
 
-# Run the app
-uv run main.py
+# Run the API server
+uv run wardrobe
 ```
 
 If `uv` is not available or fails on your system, use a standard venv:
@@ -26,7 +27,7 @@ If `uv` is not available or fails on your system, use a standard venv:
 python3 -m venv .venv
 source .venv/bin/activate   # or `.venv\Scripts\activate` on Windows
 pip install -e .
-uv run main.py   # or: python main.py
+uv run wardrobe   # or: python -m wardrobe.main
 ```
 
 ## Local development and data storage

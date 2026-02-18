@@ -8,7 +8,7 @@ How to run the project on your machine and where data is stored.
 
    ```bash
    uv sync
-   uv run main.py
+   uv run wardrobe
    ```
 
    Or with venv:
@@ -17,7 +17,7 @@ How to run the project on your machine and where data is stored.
    python3 -m venv .venv
    source .venv/bin/activate
    pip install -e .
-   python main.py
+   python -m wardrobe.main
    ```
 
 2. **Optional:** copy env defaults and edit if needed:

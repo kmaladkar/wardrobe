@@ -2,31 +2,35 @@
 
 Basic iOS app that talks to the Python backend. Implements the flows described in [IDEAS.md](../IDEAS.md): **catalog (closet)**, **what to wear today**, **add item (camera)**, and **settings**.
 
+## How to open in Xcode
+
+There is no `.xcodeproj` in the repo yet—only the Swift source in **`ios/WardrobeApp/`**. Use one of these:
+
+### Option A: One-time project creation (recommended)
+
+1. Open **Xcode**.
+2. **File → New → Project** → choose **App** → Next.
+3. Set **Product Name:** `Wardrobe`, **Team:** your team, **Organization Identifier:** e.g. `com.yourname`, **Interface:** SwiftUI, **Language:** Swift → Next.
+4. **Save** into the repo’s **`ios`** folder (e.g. `.../wardrobe/ios/`). This creates `ios/Wardrobe.xcodeproj`.
+5. In the left sidebar (Project Navigator), **right‑click the blue “Wardrobe” project** (or the yellow Wardrobe group) → **Add Files to "Wardrobe"…**.
+6. Select the **`WardrobeApp`** folder (inside `ios/`), leave **“Create groups”** selected, optionally **“Copy items if needed”** if you want a copy (usually leave unchecked so it uses the repo files).
+7. Click **Add**. You should see `WardrobeApp`, `Models`, `Views`, `Services` and all `.swift` files.
+8. If Xcode created its own `ContentView.swift` / `WardrobeApp.swift`, **delete those default files** (Move to Trash) so the ones from `WardrobeApp` are the only app entry and content view.
+9. **File → Open** (or **Open Recent**) and choose **`ios/Wardrobe.xcodeproj`** anytime to open the app.
+
+### Option B: Open the folder
+
+- In Xcode: **File → Open** → select the **`ios`** folder (or the **`WardrobeApp`** folder). Xcode may not treat it as a runnable app until you have a project; use **Option A** to create the project once, then open **`ios/Wardrobe.xcodeproj`** from then on.
+
 ## Requirements
 
 - Xcode 15+ (Swift 5.9, iOS 17)
-- Backend running (e.g. `uv run main.py` with FastAPI later) and reachable from device/simulator
+- Backend running (`uv run wardrobe`) and reachable from device/simulator
 
-## Setup
+## After opening
 
-1. **Create a new Xcode project**
-   - File → New → Project → **App**
-   - Product Name: **Wardrobe**
-   - Team: your team
-   - Organization Identifier: e.g. `com.yourname`
-   - Interface: **SwiftUI**
-   - Language: **Swift**
-   - Save inside this repo under `ios/` (e.g. `ios/Wardrobe.xcodeproj`).
-
-2. **Add the app source**
-   - Delete the default `ContentView.swift` and `WardrobeApp.swift` (or keep and replace contents).
-   - Drag the `WardrobeApp` folder into the Xcode project (Copy items if needed, Create groups).
-
-3. **Configure base URL**
-   - In **SettingsView** or **APIClient**, set `baseURL` to your backend (e.g. `http://localhost:8000` for simulator, or your machine’s IP for a real device).
-
-4. **Run**
-   - Select a simulator or device and run (⌘R).
+1. **Configure base URL** in the app: run the app, open the **Settings** tab, set the API URL (e.g. `http://localhost:8000` for simulator).
+2. **Run:** pick a simulator or device and press **⌘R**.
 
 ## Structure (what’s required)
 
