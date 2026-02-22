@@ -25,10 +25,9 @@ final class APIClient {
     // MARK: - Auth
 
     func register(email: String, displayName: String?) async throws -> User {
-        let body = ["email": email, "display_name": displayName as Any]
-        let data = try JSONEncoder().encode(body as [String: Any?])
-        var req = request("/auth/register", method: "POST", body: data)
-        req.httpBody = try JSONSerialization.data(withJSONObject: ["email": email, "display_name": displayName ?? NSNull()])
+        var req = request("/auth/register", method: "POST", body: nil)
+        let payload: [String: Any] = ["email": email, "display_name": displayName ?? NSNull()]
+        req.httpBody = try JSONSerialization.data(withJSONObject: payload)
         let (respData, response) = try await URLSession.shared.data(for: req)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError.serverError }
         return try JSONDecoder().decode(User.self, from: respData)

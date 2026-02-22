@@ -16,6 +16,9 @@
 		F953ECBB2F45809000438FF3 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECA42F45809000438FF3 /* Item.swift */; };
 		F953ECBC2F45809000438FF3 /* Outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECA52F45809000438FF3 /* Outfit.swift */; };
 		F953ECBD2F45809000438FF3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECAB2F45809000438FF3 /* SettingsView.swift */; };
+		F953ECBE2F45809000438FF3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECBF2F45809000438FF3 /* ProfileView.swift */; };
+		F953ECC02F45809000438FF3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECC12F45809000438FF3 /* User.swift */; };
+		F953ECC22F45809000438FF3 /* WardrobeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ECC32F45809000438FF3 /* WardrobeItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +30,11 @@
 		F953ECAA2F45809000438FF3 /* ClosetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosetView.swift; sourceTree = "<group>"; };
 		F953ECAB2F45809000438FF3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F953ECAC2F45809000438FF3 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
-		F953ECAE2F45809000438FF3 /* Wardrobe.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Wardrobe.xcodeproj; sourceTree = "<group>"; };
 		F953ECB02F45809000438FF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F953ECB12F45809000438FF3 /* WardrobeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeApp.swift; sourceTree = "<group>"; };
+		F953ECBF2F45809000438FF3 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F953ECC12F45809000438FF3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F953ECC32F45809000438FF3 /* WardrobeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +69,8 @@
 			children = (
 				F953ECA42F45809000438FF3 /* Item.swift */,
 				F953ECA52F45809000438FF3 /* Outfit.swift */,
+				F953ECC12F45809000438FF3 /* User.swift */,
+				F953ECC32F45809000438FF3 /* WardrobeItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -81,18 +88,11 @@
 			children = (
 				F953ECA92F45809000438FF3 /* AddItemView.swift */,
 				F953ECAA2F45809000438FF3 /* ClosetView.swift */,
+				F953ECBF2F45809000438FF3 /* ProfileView.swift */,
 				F953ECAB2F45809000438FF3 /* SettingsView.swift */,
 				F953ECAC2F45809000438FF3 /* TodayView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		F953ECAF2F45809000438FF3 /* Wardrobe */ = {
-			isa = PBXGroup;
-			children = (
-				F953ECAE2F45809000438FF3 /* Wardrobe.xcodeproj */,
-			);
-			path = Wardrobe;
 			sourceTree = "<group>";
 		};
 		F953ECB22F45809000438FF3 /* WardrobeApp */ = {
@@ -101,18 +101,10 @@
 				F953ECA62F45809000438FF3 /* Models */,
 				F953ECA82F45809000438FF3 /* Services */,
 				F953ECAD2F45809000438FF3 /* Views */,
-				F953ECAF2F45809000438FF3 /* Wardrobe */,
 				F953ECB02F45809000438FF3 /* ContentView.swift */,
 				F953ECB12F45809000438FF3 /* WardrobeApp.swift */,
 			);
 			path = WardrobeApp;
-			sourceTree = "<group>";
-		};
-		F953ECB32F45809000438FF3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,12 +156,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F953EC952F45805D00438FF3 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F953ECB32F45809000438FF3 /* Products */;
-					ProjectRef = F953ECAE2F45809000438FF3 /* Wardrobe.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F953EC932F45805D00438FF3 /* Wardrobe */,
@@ -201,6 +187,9 @@
 				F953ECBB2F45809000438FF3 /* Item.swift in Sources */,
 				F953ECBC2F45809000438FF3 /* Outfit.swift in Sources */,
 				F953ECBD2F45809000438FF3 /* SettingsView.swift in Sources */,
+				F953ECBE2F45809000438FF3 /* ProfileView.swift in Sources */,
+				F953ECC02F45809000438FF3 /* User.swift in Sources */,
+				F953ECC22F45809000438FF3 /* WardrobeItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
