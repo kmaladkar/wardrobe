@@ -141,16 +141,24 @@ final class APIClient {
 
     // MARK: - Recommendations & try-on
 
-    func fetchTodayRecommendation() async throws -> Outfit? {
-        let (_, response) = try await URLSession.shared.data(for: request("/recommendations/today"))
+    /// GET /recommendations/today – suggested outfit + try_on_id (try-on runs in background).
+    func fetchTodayRecommendation() async throws -> TodayRecommendation? {
+        let (data, response) = try await URLSession.shared.data(for: request("/recommendations/today"))
         guard let http = response as? HTTPURLResponse else { throw APIError.serverError }
-        if http.statusCode == 204 { return nil }
+        if http.statusCode == 404 || http.statusCode == 204 { return nil }
         guard http.statusCode == 200 else { throw APIError.serverError }
-        return nil
+        return try JSONDecoder().decode(TodayRecommendation.self, from: data)
+    }
+
+    /// GET /recommendations/try-on/{id} – poll try-on job status and result_image_id.
+    func getTryOn(tryOnId: String) async throws -> TryOnResult {
+        let (data, response) = try await URLSession.shared.data(for: request("/recommendations/try-on/\(tryOnId)"))
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError.serverError }
+        return try JSONDecoder().decode(TryOnResult.self, from: data)
     }
 
     func tryOn(avatarImageId: String, itemIds: [String]) async throws -> TryOnResult {
-        var req = request("/recommendations/try-on", method: "POST", body: try JSONEncoder().encode(TryOnRequest(avatar_image_id: avatarImageId, item_ids: itemIds)))
+        let req = request("/recommendations/try-on", method: "POST", body: try JSONEncoder().encode(TryOnRequest(avatar_image_id: avatarImageId, item_ids: itemIds)))
         let (data, response) = try await URLSession.shared.data(for: req)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError.serverError }
         return try JSONDecoder().decode(TryOnResult.self, from: data)
@@ -159,6 +167,26 @@ final class APIClient {
 
 struct UpdateProfileRequest: Encodable {
     let display_name: String?
+}
+
+struct TodayOutfit: Codable {
+    let items: [WardrobeItem]
+    let itemIds: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case items
+        case itemIds = "item_ids"
+    }
+}
+
+struct TodayRecommendation: Codable {
+    let outfit: TodayOutfit
+    let tryOnId: String
+
+    enum CodingKeys: String, CodingKey {
+        case outfit
+        case tryOnId = "try_on_id"
+    }
 }
 
 struct TryOnRequest: Encodable {

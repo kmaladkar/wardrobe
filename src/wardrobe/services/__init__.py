@@ -1,1 +1,1 @@
-"""External and infra services: storage, weather, calendar, task queue."""
+# Services: try-on (local open-source script/command, or placeholder).

@@ -10,6 +10,9 @@ dependencies = [
     "python-multipart>=0.0.9",
     "pydantic[email]>=2.12.5",
 ]
+[project.optional-dependencies]
+tryon = ["pillow>=10.0.0"]
+diffusion-tryon = ["gradio_client>=0.15.0"]
 
 [project.scripts]
 wardrobe = "wardrobe.main:main"
