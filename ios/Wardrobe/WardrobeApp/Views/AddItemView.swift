@@ -1,44 +1,54 @@
 import SwiftUI
 import PhotosUI
 
-/// Camera-first add item (IDEAS: quick photo capture and crop for adding items).
+/// Add item to wardrobe collection: Top, Bottom, Jacket, Footwear.
 struct AddItemView: View {
+    @AppStorage("userId") private var userId: String = ""
     @State private var selectedItem: PhotosPickerItem?
     @State private var category = "top"
     @State private var uploading = false
     @State private var message: String?
 
+    private let categories = WardrobeItem.categories
+
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Photo") {
-                    PhotosPicker(selection: $selectedItem, matching: .images) {
-                        if selectedItem != nil {
-                            Label("Photo selected", systemImage: "checkmark.circle.fill")
-                        } else {
-                            Label("Choose from library", systemImage: "photo.on.rectangle.angled")
+            Group {
+                if !userId.isEmpty {
+                    Form {
+                        Section("Photo") {
+                            PhotosPicker(selection: $selectedItem, matching: .images) {
+                                if selectedItem != nil {
+                                    Label("Photo selected", systemImage: "checkmark.circle.fill")
+                                } else {
+                                    Label("Choose from library", systemImage: "photo.on.rectangle.angled")
+                                }
+                            }
+                        }
+                        Section("Collection") {
+                            Picker("Category", selection: $category) {
+                                ForEach(categories, id: \.self) { c in
+                                    Text(c.capitalized).tag(c)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                        }
+                        if let msg = message {
+                            Section { Text(msg).foregroundStyle(.secondary) }
+                        }
+                        Section {
+                            Button("Upload to wardrobe") {
+                                Task { await upload() }
+                            }
+                            .disabled(selectedItem == nil || uploading)
                         }
                     }
-                    Text("Or use the camera in a full implementation.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Section("Category") {
-                    Picker("Category", selection: $category) {
-                        Text("Top").tag("top")
-                        Text("Bottom").tag("bottom")
-                        Text("Shoes").tag("shoes")
-                        Text("Accessory").tag("accessory")
-                    }
-                }
-                if let msg = message {
-                    Section { Text(msg).foregroundStyle(.secondary) }
-                }
-                Section {
-                    Button("Upload") {
-                        Task { await upload() }
-                    }
-                    .disabled(selectedItem == nil || uploading)
+                } else {
+                    ContentUnavailableView(
+                        "Sign in to add items",
+                        systemImage: "person.crop.circle.badge.plus",
+                        description: Text("Create a profile in the Profile tab.")
+                    )
                 }
             }
             .navigationTitle("Add item")
@@ -57,15 +67,11 @@ struct AddItemView: View {
                 message = "Could not load image."
                 return
             }
-            _ = try await APIClient.shared.uploadItem(
-                imageData: imageData,
-                filename: "photo.jpg",
-                category: category
-            )
-            message = "Uploaded."
+            _ = try await APIClient.shared.uploadWardrobeItem(imageData: imageData, category: category)
+            message = "Added to \(category)."
             selectedItem = nil
         } catch {
-            message = "Upload failed. Is the backend running?"
+            message = "Upload failed."
         }
     }
 }

@@ -1,23 +1,26 @@
 import SwiftUI
 
-/// Main tab bar: Closet | Today | Add | Settings (per IDEAS.md).
+/// Main tab bar: Profile | Closet | Today | Add | Settings.
 struct ContentView: View {
     @State private var selectedTab = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
+            ProfileView()
+                .tabItem { Label("Profile", systemImage: "person.circle.fill") }
+                .tag(0)
             ClosetView()
                 .tabItem { Label("Closet", systemImage: "tshirt.fill") }
-                .tag(0)
+                .tag(1)
             TodayView()
                 .tabItem { Label("Today", systemImage: "sparkles") }
-                .tag(1)
+                .tag(2)
             AddItemView()
                 .tabItem { Label("Add", systemImage: "camera.fill") }
-                .tag(2)
+                .tag(3)
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(3)
+                .tag(4)
         }
     }
 }

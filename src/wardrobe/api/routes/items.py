@@ -48,7 +48,7 @@ def list_items():
     conn = get_connection()
     try:
         rows = conn.execute(
-            "SELECT id, filename, content_type, created_at FROM images ORDER BY created_at DESC"
+            "SELECT id, filename, content_type, created_at FROM images WHERE kind = 'wardrobe' OR kind IS NULL ORDER BY created_at DESC"
         ).fetchall()
         return [_row_to_item(dict(r), BASE_URL) for r in rows]
     finally:
@@ -68,8 +68,8 @@ async def create_item(
     conn = get_connection()
     try:
         conn.execute(
-            "INSERT INTO images (id, data, filename, content_type) VALUES (?, ?, ?, ?)",
-            (id_, data, filename, content_type),
+            "INSERT INTO images (id, user_id, data, filename, content_type, kind) VALUES (?, ?, ?, ?, ?, 'wardrobe')",
+            (id_, None, data, filename, content_type),
         )
         conn.commit()
         row = conn.execute(
